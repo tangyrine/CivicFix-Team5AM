@@ -1,16 +1,16 @@
-<<<<<<< HEAD
-# React + Vite
+# Project Title: CivicFix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Description:
+CivicFix empowers people to report and monitor local issues like potholes, broken streetlights, or garbage dumps; making it easier for authorities to take action. It bridges the gap between citizens and local authorities to create cleaner, safer, and more responsive communities.
 
-Currently, two official plugins are available:
+### Team Members:
+Tanisha Kharbe: 
+Joshua Fernandes:
+Parth Burye:
+Shivam Chouhan:
+Yash Surlakar:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# CivicFix-Team5AM
->>>>>>> e6b512db29b28ca181c92f3d615305db7ddf0cec
+### Tech Stack: 
+Frontend: React
+Backend: Node.js
+Database: Firebase/PostgreSQL
