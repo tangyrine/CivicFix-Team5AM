@@ -11,6 +11,6 @@ CivicFix empowers people to report and monitor local issues like potholes, broke
 - Yash Surlakar: https://github.com/Yash-hehe
 
 ### Tech Stack: 
-Frontend: React
-Backend: Node.js
-Database: Firebase/PostgreSQL
+- Frontend: React
+- Backend: Node.js
+- Database: Firebase/PostgreSQL
