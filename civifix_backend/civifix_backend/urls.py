@@ -16,8 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.http import HttpResponse
+
+# Simple home page for the root URL
+def home(request):
+    return HttpResponse("✅ CiviFix API is running. Use /api/... endpoints.")
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('', home),  # handles the root URL
+    path('admin/', admin.site.urls),
+    path('', include('api.urls')),  # include all API routes
 ]
