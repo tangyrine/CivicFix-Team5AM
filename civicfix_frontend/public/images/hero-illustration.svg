@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Two people with tools illustration -->
+  <g transform="translate(50, 50)">
+    <!-- Person 1 -->
+    <path d="M150,200 L150,350" stroke="#FFD75C" stroke-width="20" /> <!-- body -->
+    <circle cx="150" cy="150" r="50" fill="#FFD75C" /> <!-- head -->
+    <path d="M100,250 L200,250" stroke="#FFD75C" stroke-width="20" /> <!-- arms -->
+    <path d="M150,350 L100,400 M150,350 L200,400" stroke="#FFD75C" stroke-width="20" /> <!-- legs -->
+    <!-- Tool -->
+    <path d="M200,250 L250,200" stroke="#FFD75C" stroke-width="10" /> <!-- wrench handle -->
+    <circle cx="270" cy="180" r="20" fill="#FFD75C" /> <!-- wrench head -->
+    
+    <!-- Person 2 -->
+    <path d="M350,200 L350,350" stroke="#FFD75C" stroke-width="20" /> <!-- body -->
+    <circle cx="350" cy="150" r="50" fill="#FFD75C" /> <!-- head -->
+    <path d="M300,250 L400,250" stroke="#FFD75C" stroke-width="20" /> <!-- arms -->
+    <path d="M350,350 L300,400 M350,350 L400,400" stroke="#FFD75C" stroke-width="20" /> <!-- legs -->
+    
+    <!-- CivicFix Logo/Icon -->
+    <circle cx="250" cy="100" r="30" fill="#002B96" />
+    <text x="235" y="110" fill="#FFD75C" font-family="Arial" font-size="20">Fix</text>
+  </g>
+</svg>

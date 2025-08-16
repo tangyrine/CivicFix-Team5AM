@@ -1,0 +1,43 @@
+:root {
+  --primary-blue: #002b96;
+  --primary-yellow: #ffd75c;
+  --white: #ffffff;
+}
+/* Tailwind v4 uses an import in the main CSS entry. Keep this file for custom global styles only. */
+/* If you need Tailwind v4 in this file, import it from the project's main entry (src/index.css) */
+
+body {
+  margin: 0;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.button-primary {
+  background-color: var(--primary-yellow);
+  color: var(--primary-blue);
+}
+
+.button-primary:hover {
+  opacity: 0.9;
+}
