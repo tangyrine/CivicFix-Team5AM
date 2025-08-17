@@ -1,21 +1,19 @@
+@import "tailwindcss";
+
 :root {
   --primary-blue: #002b96;
   --primary-yellow: #ffd75c;
   --white: #ffffff;
 }
-/* Tailwind v4 uses an import in the main CSS entry. Keep this file for custom global styles only. */
-/* If you need Tailwind v4 in this file, import it from the project's main entry (src/index.css) */
 
 body {
   margin: 0;
-  
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-    
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;

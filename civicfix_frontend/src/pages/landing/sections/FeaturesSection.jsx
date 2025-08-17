@@ -1,4 +1,4 @@
-import IssuesCarousel from "@/components/features/IssuesCarousel.jsx";
+import IssuesCarousel from "../../../components/features/IssuesCarousel.jsx";
 import "./FeaturesSection.css";
 
 const FeaturesSection = () => {
