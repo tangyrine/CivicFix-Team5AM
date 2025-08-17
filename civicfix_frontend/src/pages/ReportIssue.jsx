@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ReportIssue = () => {
@@ -9,6 +9,16 @@ const ReportIssue = () => {
     description: "",
     photos: [],
   });
+
+  const handleLogout = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+
+    // Redirect to landing page
+    navigate("/");
+  };
 
   const issueCategories = [
     "Pothole",
@@ -23,9 +33,33 @@ const ReportIssue = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Issue report submitted:", formData);
-    // Redirect back to dashboard after submission
+    // Validate required fields
+    const errors = [];
+    if (!formData.category) errors.push("Please select an issue category.");
+    if (!formData.location) errors.push("Please enter the location.");
+    if (!formData.description) errors.push("Please enter a description.");
+    if (formData.description && formData.description.length > 500)
+      errors.push("Description must be 500 characters or less.");
+
+    if (errors.length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+
+    // Build issue payload
+    const issueData = {
+      category: formData.category,
+      location: formData.location,
+      description: formData.description,
+      photos: formData.photos,
+    };
+
+    handleSubmitIssue(issueData);
+
+    // Clear form and navigate to dashboard
+    setFormData({ category: "", location: "", description: "", photos: [] });
+    setPhotoPreviews([]);
+    setFormErrors([]);
     navigate("/dashboard");
   };
 
@@ -39,10 +73,29 @@ const ReportIssue = () => {
 
   const handlePhotoUpload = (e) => {
     const files = Array.from(e.target.files);
-    setFormData((prev) => ({
-      ...prev,
-      photos: files,
+    // enforce max 5 files and 10MB each
+    const validFiles = [];
+    const fileErrors = [];
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      if (f.size > 10 * 1024 * 1024) {
+        fileErrors.push(`${f.name} is larger than 10MB.`);
+        continue;
+      }
+      validFiles.push(f);
+      if (validFiles.length >= 5) break;
+    }
+
+    if (fileErrors.length > 0)
+      setFormErrors((prev) => [...prev, ...fileErrors]);
+
+    setFormData((prev) => ({ ...prev, photos: validFiles }));
+    // create previews
+    const previews = validFiles.map((f) => ({
+      name: f.name,
+      url: URL.createObjectURL(f),
     }));
+    setPhotoPreviews(previews);
   };
 
   const detectLocation = () => {
@@ -55,6 +108,30 @@ const ReportIssue = () => {
         }));
       });
     }
+  };
+
+  // photo preview state and form errors
+  const [photoPreviews, setPhotoPreviews] = useState([]);
+  const [formErrors, setFormErrors] = useState([]);
+
+  useEffect(() => {
+    // revoke object URLs on unmount
+    return () => {
+      photoPreviews.forEach((p) => URL.revokeObjectURL(p.url));
+    };
+  }, [photoPreviews]);
+
+  const removePhoto = (index) => {
+    const updated = formData.photos.filter((_, i) => i !== index);
+    setFormData((prev) => ({ ...prev, photos: updated }));
+    const updatedPreviews = photoPreviews.filter((_, i) => i !== index);
+    setPhotoPreviews(updatedPreviews);
+  };
+
+  // placeholder API handler
+  const handleSubmitIssue = (issueData) => {
+    // TODO: connect to backend API
+    console.log("handleSubmitIssue called:", issueData);
   };
 
   return (
@@ -76,17 +153,26 @@ const ReportIssue = () => {
             <button className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium">
               Report an Issue
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+            <button
+              onClick={() => navigate("/my-complaints")}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
               My Complaints
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+            <button
+              onClick={() => navigate("/profile")}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
               Profile
             </button>
           </div>
         </nav>
 
         <div className="p-4">
-          <button className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
+          >
             Logout
           </button>
         </div>
@@ -113,6 +199,15 @@ const ReportIssue = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {formErrors.length > 0 && (
+                <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded">
+                  <ul className="list-disc pl-5">
+                    {formErrors.map((err, i) => (
+                      <li key={i}>{err}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* Issue Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -189,9 +284,27 @@ const ReportIssue = () => {
                 </div>
                 {formData.photos.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 mb-2">
                       {formData.photos.length} photo(s) selected
                     </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {photoPreviews.map((p, idx) => (
+                        <div key={p.name} className="relative">
+                          <img
+                            src={p.url}
+                            alt={p.name}
+                            className="w-full h-24 object-cover rounded"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removePhoto(idx)}
+                            className="absolute top-1 right-1 bg-white bg-opacity-75 rounded-full p-1 text-sm"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

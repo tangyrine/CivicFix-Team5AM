@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const recentIssues = [
@@ -41,6 +42,18 @@ const Dashboard = () => {
     { label: "Pending", count: 1, color: "bg-red-500", icon: "⚠️" },
   ];
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+
+    // Redirect to landing page
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
@@ -51,23 +64,38 @@ const Dashboard = () => {
 
         <nav className="flex-1 px-4">
           <div className="space-y-2">
-            <button className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium"
+            >
               Dashboard
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+            <button
+              onClick={() => navigate("/report-issue")}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
               Report an Issue
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+            <button
+              onClick={() => navigate("/my-complaints")}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
               My Complaints
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+            <button
+              onClick={() => navigate("/profile")}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
               Profile
             </button>
           </div>
         </nav>
 
         <div className="p-4">
-          <button className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
+          >
             Logout
           </button>
         </div>
@@ -89,7 +117,10 @@ const Dashboard = () => {
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gray-800 text-white p-6 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer">
+              <div
+                onClick={() => navigate("/report-issue")}
+                className="bg-gray-800 text-white p-6 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+              >
                 <div className="flex items-center mb-2">
                   <span className="text-lg mr-2">➕</span>
                   <h3 className="font-semibold">Report New Issue</h3>

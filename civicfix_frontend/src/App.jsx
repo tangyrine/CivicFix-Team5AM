@@ -4,6 +4,8 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Dashboard from "./pages/Dashboard";
 import ReportIssue from "./pages/ReportIssue";
+import MyComplaints from "./pages/MyComplaints";
+import Profile from "./pages/Profile";
 import "./styles/global.css";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/report-issue" element={<ReportIssue />} />
+        <Route path="/my-complaints" element={<MyComplaints />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
