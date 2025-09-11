@@ -68,6 +68,64 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Hamburger icon styles */
+.hamburger-icon {
+  display: none;
+}
+.hamburger-icon span {
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 101;
+    color: "white";
+  }
+}
+
+/* Mobile Drawer Overlay */
+.mobile-drawer-overlay {
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dashboard Sidebar Hamburger styles */
+.dashboard-hamburger-icon {
+  display: none;
+}
+.dashboard-hamburger-icon span {
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .dashboard-hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 103;
+  }
+}
+
+/* Dashboard Mobile Drawer Overlay */
+.dashboard-mobile-drawer-overlay {
+  animation: fadeIn 0.2s;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .navbar {

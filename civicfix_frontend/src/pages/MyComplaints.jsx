@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardSidebarHamburger from "../components/layout/DashboardSidebarHamburger";
+import DashboardMobileDrawer from "../components/layout/DashboardMobileDrawer";
 
 const mockComplaints = [
   {
@@ -28,6 +30,7 @@ const mockComplaints = [
     photos: 1,
     status: "In Progress",
   },
+
   {
     id: "ISS-2024-003",
     title: "Overflowing garbage bin at Oak Street",
@@ -60,18 +63,16 @@ const MyComplaints = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All Categories");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
-    // Clear any stored authentication data
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     sessionStorage.clear();
-
-    // Redirect to landing page
     navigate("/");
   };
 
-  const counts = useMemo(() => {
+  const counts = React.useMemo(() => {
     const c = {
       All: complaints.length,
       Pending: 0,
@@ -86,7 +87,7 @@ const MyComplaints = () => {
     return c;
   }, [complaints]);
 
-  const filtered = useMemo(() => {
+  const filtered = React.useMemo(() => {
     return complaints.filter((c) => {
       if (statusFilter !== "All" && c.status !== statusFilter) return false;
       if (categoryFilter !== "All Categories" && c.category !== categoryFilter)
@@ -104,88 +105,118 @@ const MyComplaints = () => {
   const handleViewDetails = (id) => {
     navigate(`/complaints/${id}`);
   };
-
   const handleUpdate = (id) => {
-    // placeholder - open update form later
     alert(`Open update form for ${id}`);
   };
-
   const handleClose = (id) => {
     setComplaints((prev) =>
       prev.map((c) => (c.id === id ? { ...c, status: "Resolved" } : c))
     );
   };
 
+  const sidebarLinks = (
+    <>
+      <button
+        onClick={() => {
+          navigate("/dashboard");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        Dashboard
+      </button>
+      <button
+        onClick={() => {
+          navigate("/report-issue");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        Report an Issue
+      </button>
+      <button
+        onClick={() => {
+          navigate("/my-complaints");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium"
+      >
+        My Complaints
+      </button>
+      <button
+        onClick={() => {
+          navigate("/profile");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        Profile
+      </button>
+      <button
+        onClick={() => {
+          handleLogout();
+          setSidebarOpen(false);
+        }}
+        className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
+      >
+        Logout
+      </button>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar (same structure as Dashboard) */}
-      <div className="w-64 bg-[#2D1B69] text-white flex flex-col">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Top bar for mobile and desktop */}
+      <div className="w-full flex items-center justify-between bg-white border-b border-gray-200 px-4 py-3 md:hidden">
+        <h1 className="text-xl font-bold text-[#2D1B69]">CivicFix</h1>
+        <DashboardSidebarHamburger onClick={() => setSidebarOpen(true)} />
+      </div>
+
+      {/* Sidebar for desktop */}
+      <div className="w-64 bg-[#2D1B69] text-white flex-col hidden md:flex fixed h-full">
         <div className="p-6">
           <h1 className="text-xl font-bold">CivicFix</h1>
         </div>
-
         <nav className="flex-1 px-4">
-          <div className="space-y-2">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => navigate("/report-issue")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Report an Issue
-            </button>
-            <button
-              onClick={() => navigate("/my-complaints")}
-              className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium"
-            >
-              My Complaints
-            </button>
-            <button
-              onClick={() => navigate("/profile")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Profile
-            </button>
-          </div>
+          <div className="space-y-2">{sidebarLinks}</div>
         </nav>
-
-        <div className="p-4">
-          <button
-            onClick={handleLogout}
-            className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
       </div>
 
+      {/* Mobile Drawer */}
+      <DashboardMobileDrawer
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      >
+        <nav
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
+          {sidebarLinks}
+        </nav>
+      </DashboardMobileDrawer>
+
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <div className="flex-1 flex flex-col md:ml-64">
+        <header className="bg-white border-b border-gray-200 px-6 py-4 hidden md:block">
           <h1 className="text-2xl font-semibold text-gray-800">
             View your past complaints
           </h1>
         </header>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 md:p-6">
           <div className="max-w-5xl mx-auto space-y-6">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <div className="flex items-center gap-4">
+            <div className="bg-white p-4 rounded-lg border border-gray-200 overflow-x-auto">
+              <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
                 <input
                   type="search"
                   placeholder="Search complaints by description or tracking ID..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="flex-1 p-3 border border-gray-200 rounded"
+                  className="flex-1 p-3 border border-gray-200 rounded min-w-0"
                 />
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2">
+              <div className="mt-4 flex flex-col md:flex-row flex-wrap items-start md:items-center gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
                   {statusOptions.map((s) => (
                     <button
                       key={s}
@@ -206,7 +237,7 @@ const MyComplaints = () => {
                   ))}
                 </div>
 
-                <div className="ml-4 flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap md:ml-4">
                   {categoryOptions.map((cat) => (
                     <button
                       key={cat}
@@ -228,11 +259,11 @@ const MyComplaints = () => {
               {filtered.map((c) => (
                 <div
                   key={c.id}
-                  className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
+                  className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 shadow-sm overflow-x-auto"
                 >
-                  <div className="flex justify-between items-start">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
                     <div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
                         <h3 className="text-lg font-semibold">{c.title}</h3>
                         <span className="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">
                           {c.severity}
@@ -268,7 +299,7 @@ const MyComplaints = () => {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex justify-end gap-3">
+                  <div className="mt-4 flex flex-col md:flex-row justify-end gap-3">
                     <button
                       onClick={() => handleViewDetails(c.id)}
                       className="px-3 py-2 bg-white border rounded text-sm"

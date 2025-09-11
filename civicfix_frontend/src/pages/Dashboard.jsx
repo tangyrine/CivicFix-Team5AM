@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardSidebarHamburger from "../components/layout/DashboardSidebarHamburger";
+import DashboardMobileDrawer from "../components/layout/DashboardMobileDrawer";
 
 const Dashboard = () => {
   const recentIssues = [
@@ -54,61 +56,105 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const sidebarLinks = (
+    <>
+      <button
+        onClick={() => {
+          navigate("/dashboard");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium"
+      >
+        Dashboard
+      </button>
+      <button
+        onClick={() => {
+          navigate("/report-issue");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        Report an Issue
+      </button>
+      <button
+        onClick={() => {
+          navigate("/my-complaints");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        My Complaints
+      </button>
+      <button
+        onClick={() => {
+          navigate("/profile");
+          setSidebarOpen(false);
+        }}
+        className="w-full text-white text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        Profile
+      </button>
+      <button
+        onClick={() => {
+          handleLogout();
+          setSidebarOpen(false);
+        }}
+        className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
+      >
+        Logout
+      </button>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <div className="w-64 bg-[#2D1B69] text-white flex flex-col">
+      {/* Sidebar for desktop */}
+      <div
+        className="w-64 bg-[#2D1B69] text-white flex-col hidden md:flex"
+        style={{ display: isMobile ? "none" : "flex" }}
+      >
         <div className="p-6">
           <h1 className="text-xl font-bold">CivicFix</h1>
         </div>
-
         <nav className="flex-1 px-4">
-          <div className="space-y-2">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="w-full text-left px-4 py-3 rounded-lg bg-white text-[#2D1B69] font-medium"
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => navigate("/report-issue")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Report an Issue
-            </button>
-            <button
-              onClick={() => navigate("/my-complaints")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              My Complaints
-            </button>
-            <button
-              onClick={() => navigate("/profile")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Profile
-            </button>
-          </div>
+          <div className="space-y-2">{sidebarLinks}</div>
         </nav>
-
-        <div className="p-4">
-          <button
-            onClick={handleLogout}
-            className="w-full px-4 py-2 bg-white text-[#2D1B69] rounded-lg font-medium hover:bg-gray-100 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
       </div>
+
+      {/* Hamburger for mobile */}
+      {isMobile && (
+        <div style={{ position: "fixed", right: 16, top: 16, zIndex: 102 }}>
+          <DashboardSidebarHamburger onClick={() => setSidebarOpen(true)} />
+        </div>
+      )}
+
+      {/* Mobile Drawer */}
+      <DashboardMobileDrawer
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      >
+        <nav
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
+          {sidebarLinks}
+        </nav>
+      </DashboardMobileDrawer>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+        <header className="bg-white border-b border-gray-200 px-6 py-4">
           <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
-          <div className="w-10 h-10 bg-red-400 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold">👤</span>
-          </div>
         </header>
 
         {/* Dashboard Content */}
