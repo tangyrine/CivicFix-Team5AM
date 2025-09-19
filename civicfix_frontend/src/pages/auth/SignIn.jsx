@@ -26,8 +26,8 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left side - Illustration */}
-      <div className="flex-1 bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-8">
+      {/* Left side - Illustration (visible only on larger screens) */}
+      <div className="hidden md:flex md:flex-1 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-8">
         <div className="max-w-md">
           <img
             src="/images/hero-image.png"
@@ -37,10 +37,14 @@ const SignIn = () => {
         </div>
       </div>
 
-      {/* Right side - Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50">
+      {/* Right side - Form (full width on mobile, half width on larger screens) */}
+      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50 w-full">
         <div className="max-w-md w-full space-y-6">
           <div className="text-center">
+            {/* CivicFix title only visible on mobile */}
+            <h1 className="md:hidden text-3xl font-bold text-blue-800 mb-2">
+              CivicFix
+            </h1>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               Welcome Back
             </h2>
@@ -95,13 +99,13 @@ const SignIn = () => {
               Log In
             </button>
 
-            <div className="text-center mt-4">
+            <div className="text-center mt-6">
               <span className="text-sm text-gray-600">
                 Don't have an account?{" "}
                 <button
                   type="button"
                   onClick={() => navigate("/auth/signup")}
-                  className="text-blue-600 hover:text-blue-500 font-medium border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="text-blue-600 hover:text-blue-500 font-medium ml-1"
                 >
                   Sign Up
                 </button>

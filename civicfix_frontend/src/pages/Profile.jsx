@@ -39,7 +39,7 @@ const Profile = () => {
     setErrors({});
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const newErrors = {};
 
     if (!profile.name.trim()) {
@@ -64,7 +64,7 @@ const Profile = () => {
     }
 
     // Placeholder for API call
-    updateProfile(profile);
+    await updateProfile(profile);
     setIsEditing(false);
     setErrors({});
   };

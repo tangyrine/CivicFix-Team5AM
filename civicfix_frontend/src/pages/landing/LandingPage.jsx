@@ -2,8 +2,10 @@ import Navbar from "../../components/layout/Navbar.jsx";
 import HomeSection from "./sections/HomeSection.jsx";
 import AboutSection from "./sections/AboutSection.jsx";
 import FeaturesSection from "./sections/FeaturesSection.jsx";
+import TestimonialSection from "./sections/TestimonialSection.jsx";
 import Footer from "../../components/layout/Footer.jsx";
 import HowToUseSection from "../../components/sections/HowToUseSection.jsx";
+import ChatBot from "../../components/common/ChatBot.jsx";
 
 const LandingPage = () => {
   return (
@@ -13,7 +15,9 @@ const LandingPage = () => {
       <AboutSection />
       <FeaturesSection />
       <HowToUseSection />
+      <TestimonialSection />
       <Footer />
+      <ChatBot />
     </div>
   );
 };
