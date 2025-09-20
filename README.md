@@ -13,7 +13,7 @@ CivicFix empowers people to report and monitor local issues like potholes, broke
 ### Tech Stack: 
 - Frontend: React
 - Backend: Node.js
-- Database: Firebase/PostgreSQL
+- Database: Firebase
 
 
 # Firebase Studio
