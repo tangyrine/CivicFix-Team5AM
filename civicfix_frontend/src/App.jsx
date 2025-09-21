@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ReportIssue from "./pages/ReportIssue";
 import MyComplaints from "./pages/MyComplaints";
 import Profile from "./pages/Profile";
+import Emergency from "./pages/Emergency";
 import "./styles/global.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/report-issue" element={<ReportIssue />} />
         <Route path="/my-complaints" element={<MyComplaints />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/emergency" element={<Emergency />} />
       </Routes>
     </Router>
   );

@@ -2,6 +2,17 @@ import React, { useEffect, useRef } from "react";
 
 const MobileDrawer = ({ open, onClose, children }) => {
   const drawerRef = useRef(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  // Handle visibility for animations
+  React.useEffect(() => {
+    if (open) {
+      setIsVisible(true);
+    } else {
+      const timer = setTimeout(() => setIsVisible(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
 
   // Focus trap
   useEffect(() => {
@@ -22,7 +33,7 @@ const MobileDrawer = ({ open, onClose, children }) => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!isVisible) return null;
 
   return (
     <div
@@ -37,6 +48,8 @@ const MobileDrawer = ({ open, onClose, children }) => {
         zIndex: 100,
         display: "flex",
         justifyContent: "flex-end",
+        opacity: open ? 1 : 0,
+        transition: "opacity 0.3s ease",
       }}
       onClick={onClose}
       tabIndex={-1}
@@ -48,7 +61,7 @@ const MobileDrawer = ({ open, onClose, children }) => {
         id="mobile-drawer"
         tabIndex={0}
         style={{
-          background: "#3b5ce6",
+          background: "#0925ba",
           width: "80vw",
           maxWidth: "320px",
           height: "100vh",
@@ -57,6 +70,10 @@ const MobileDrawer = ({ open, onClose, children }) => {
           display: "flex",
           flexDirection: "column",
           outline: "none",
+          borderTopLeftRadius: "20px",
+          borderBottomLeftRadius: "20px",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.3s ease-in-out",
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -65,12 +82,30 @@ const MobileDrawer = ({ open, onClose, children }) => {
           onClick={onClose}
           style={{
             alignSelf: "flex-end",
-            background: "none",
+            background: "rgba(255, 255, 255, 0.2)",
             border: "none",
             color: "#fff",
-            fontSize: "2rem",
+            fontSize: "1.5rem",
             cursor: "pointer",
-            marginBottom: "2rem",
+            marginBottom: "1.5rem",
+            width: "30px",
+            height: "30px",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+            fontWeight: "bold",
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+            transition: "all 0.2s ease",
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
+            e.currentTarget.style.transform = "scale(1.1)";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+            e.currentTarget.style.transform = "scale(1)";
           }}
         >
           ×
