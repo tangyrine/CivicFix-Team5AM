@@ -6,10 +6,10 @@
   width: 95%;
   max-width: 1200px;
   z-index: 50;
-  padding: 0.75rem 1.5rem;
+  padding: 0.2rem 0.2rem;
   height: auto;
-  background: linear-gradient(135deg, #4a6cf7 0%, #3b5ce6 100%);
-  border-radius: 25px;
+  background: white;
+  border-radius: 45px;
   box-shadow: 0 4px 20px rgba(74, 108, 247, 0.3);
 }
 
@@ -23,24 +23,38 @@
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: white;
+  color: #0925ba;
   text-decoration: none;
   padding: 0.5rem 0;
 }
 
 .navbar-links {
+  padding-left: 12rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.navbar-regular-links {
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  flex: 1;
-  justify-content: center;
+}
+
+.navbar-action-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
 }
 
 .navbar-link {
-  color: white;
+  color: #0925ba;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
   padding: 0.5rem 0;
 }
@@ -51,10 +65,12 @@
 }
 
 .sign-in-button {
-  background-color: white;
-  color: #4a6cf7;
-  padding: 0.75rem 2rem;
+  background-color: #0925ba;
+  color: white;
+  padding: 0.5rem 1.7rem;
   border-radius: 25px;
+  margin-left: auto;
+
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -102,6 +118,15 @@
   }
 }
 
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* Dashboard Sidebar Hamburger styles */
 .dashboard-hamburger-icon {
   display: none;
@@ -134,16 +159,46 @@
   }
 
   .navbar-links {
+    gap: 1rem;
+  }
+
+  .navbar-regular-links {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1.5rem;
   }
 
+  .navbar-action-links {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1.5rem;
+  }
+
   .navbar-link {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    color: white;
   }
 
   .sign-in-button {
     padding: 0.5rem 1.5rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    background-color: white;
+    color: #0925ba;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .sign-in-button:hover {
+    background-color: #ffe066;
+    color: #0925ba;
+  }
+
+  .emergency-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.5rem !important;
+    margin-right: 0 !important;
   }
 }
 
@@ -154,5 +209,17 @@
 
   .navbar-brand {
     font-size: 1.25rem;
+  }
+
+  #mobile-drawer .navbar-link {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  #mobile-drawer .navbar-link:hover {
+    color: #ffe066;
+    transform: translateX(5px);
   }
 }

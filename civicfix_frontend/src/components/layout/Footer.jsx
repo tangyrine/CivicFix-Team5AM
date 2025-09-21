@@ -9,6 +9,7 @@ const Footer = () => {
         backgroundColor: "#1e1b4b", // Dark blue/purple background
         color: "#ffffff",
         padding: "3rem 2rem",
+        marginTop: "20px",
       }}
     >
       <div

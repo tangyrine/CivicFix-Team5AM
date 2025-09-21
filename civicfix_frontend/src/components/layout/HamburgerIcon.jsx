@@ -8,49 +8,50 @@ const HamburgerIcon = ({ onClick }) => (
     aria-expanded="false"
     onClick={onClick}
     style={{
-      background: "none",
+      background: "#0925ba",
       border: "none",
-      padding: 0,
+      padding: "6px",
       cursor: "pointer",
       display: "flex",
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       width: "40px",
       height: "40px",
+      borderRadius: "8px",
+      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
     }}
   >
     <span
       style={{
         display: "block",
-        width: "28px",
-        height: "3px",
+        width: "24px",
+        height: "2px",
         background: "#fff",
         borderRadius: "2px",
-        marginBottom: "6px",
+        marginBottom: "5px",
         transition: "all 0.3s",
       }}
     ></span>
     <span
       style={{
         display: "block",
-        width: "28px",
-        height: "3px",
+        width: "24px",
+        height: "2px",
         background: "#fff",
         borderRadius: "2px",
-        marginBottom: "6px",
+        marginBottom: "5px",
         transition: "all 0.3s",
-        color: "white",
       }}
     ></span>
     <span
       style={{
         display: "block",
-        width: "28px",
-        height: "3px",
+        width: "24px",
+        height: "2px",
         background: "#fff",
         borderRadius: "2px",
         transition: "all 0.3s",
-        color: "white",
       }}
     ></span>
   </button>
